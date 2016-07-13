@@ -34,12 +34,21 @@ get('/book/:id') do
   erb(:book)
 end
 
-get('/book/update') do
-  @books = Book.all()
+get('/book/:id/update') do
+  @book = Book.find_book(params.fetch("id").to_i())
   erb(:update_book_form)
 end
 
-post('/book/update') do
+patch('/book/:id/update') do
+  title = params.fetch('title')
+  author = params.fetch('author')
+  @book = Book.find_book(params.fetch('id').to_i())
+  @book.update_title({:title => title})
+  @book.update_author({:author => author})
+  erb(:book)
+end
+
+post('/book/:id/update') do
   @title = params.fetch('title')
   @author = params.fetch('author')
   new_book = Book.new({:title => @title, :author => @author})

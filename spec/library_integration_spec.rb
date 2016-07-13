@@ -38,14 +38,34 @@ end
 
 describe('view the book page', {:type => :feature}) do
   it('lets a librarian see an individual book') do
-    visit('/book/:id')
+    visit('/books')
+    click_link("Add a book to the database!")
+    expect(page).to have_content("Add a book to the database!")
+    fill_in('title', :with => "Test Title")
+    fill_in('author', :with => "Test Author")
+    click_button('Add Book')
+    expect(page).to have_content("Book has been added to database!")
+    click_link("Back")
+    expect(page).to have_content("Test Title")
+    click_link("Test Title")
     expect(page).to have_content("Book Info")
   end
 end
 
 describe('the update book path', {:type => :feature}) do
   it('lets a librarian update book info') do
-    visit('/book/update')
+    visit('/books')
+    click_link("Add a book to the database!")
+    expect(page).to have_content("Add a book to the database!")
+    fill_in('title', :with => "Test Title")
+    fill_in('author', :with => "Test Author")
+    click_button('Add Book')
+    expect(page).to have_content("Book has been added to database!")
+    click_link("Back")
+    expect(page).to have_content("Test Title")
+    click_link("Test Title")
+    expect(page).to have_content("Book Info")
+    click_link("Update")
     expect(page).to have_content("Update book info")
     fill_in('title', :with => "New Title")
     fill_in('author', :with => "New Author")
