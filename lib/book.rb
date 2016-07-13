@@ -1,9 +1,10 @@
 class Book
-  attr_reader(:title, :author)
+  attr_reader(:title, :author, :id)
 
   define_method (:initialize) do |attributes|
     @title = attributes.fetch(:title)
     @author = attributes.fetch(:author)
+    @id = attributes[:id]
   end
 
   define_singleton_method(:all) do

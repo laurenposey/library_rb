@@ -22,3 +22,16 @@ describe('the add the book path', {:type => :feature}) do
     expect(page).to have_content("Book has been added to database!")
   end
 end
+
+describe('the list the book path', {:type => :feature}) do
+  it('lets a librarian view all books') do
+    visit('/books/new')
+    expect(page).to have_content("Add a book to the database!")
+    fill_in('title', :with => "Test Title")
+    fill_in('author', :with => "Test Author")
+    click_button('Add Book')
+    expect(page).to have_content("Book has been added to database!")
+    visit('/books')
+    expect(page).to have_content('Test Title')
+  end
+end

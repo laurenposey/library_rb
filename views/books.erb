@@ -1,3 +1,19 @@
 <h1>Hello Librarian!</h1>
 
+<% if @books.any?() %>
+  <h3>Here are your books:</h3>
+
+  <ul>
+    <% @books.each() do |book| %>
+      <li><a href="/books/<%= book.id()%>"><%= book.title() %></a> </li>
+    <% end %>
+  </ul>
+
+  <% else %>
+
+    <p>There are no books yet!</p>
+
+<% end %>
+
+
 <p><a href = "books/new">Add a book to the database!</a></p>
