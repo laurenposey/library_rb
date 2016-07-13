@@ -73,3 +73,23 @@ describe('the update book path', {:type => :feature}) do
     expect(page).to have_content('New Title')
   end
 end
+
+describe('the delete book path', {:type => :feature}) do
+  it('lets a librarian delete a book') do
+    visit('/books')
+    click_link("Add a book to the database!")
+    expect(page).to have_content("Add a book to the database!")
+    fill_in('title', :with => "Test Title")
+    fill_in('author', :with => "Test Author")
+    click_button('Add Book')
+    expect(page).to have_content("Book has been added to database!")
+    click_link("Back")
+    expect(page).to have_content("Test Title")
+    click_link("Test Title")
+    expect(page).to have_content("Book Info")
+    click_link("Update")
+    expect(page).to have_content("Update book info")
+    click_button('Delete Book')
+    expect(page).to have_content('Book has been')
+  end
+end

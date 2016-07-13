@@ -48,4 +48,8 @@ class Book
     DB.exec("UPDATE books SET author='#{@author}' WHERE id=#{@id};")
   end
 
+  define_method(:delete_book) do
+    DB.exec("DELETE FROM books WHERE id=#{id};")
+  end
+
 end

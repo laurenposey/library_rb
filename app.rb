@@ -55,3 +55,9 @@ post('/book/:id/update') do
   new_book.save()
   erb(:success)
 end
+
+delete("/book/:id/delete") do
+  @book = Book.find_book(params.fetch("id").to_i())
+  @book.delete_book()
+  erb(:success)
+end
