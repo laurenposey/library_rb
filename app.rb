@@ -28,3 +28,21 @@ post('/books/new') do
   new_book.save()
   erb(:success)
 end
+
+get('/book/:id') do
+  @book = Book.find(params.fetch('id').to_i())
+  erb(:book)
+end
+
+get('/book/update') do
+  @books = Book.all()
+  erb(:update_book_form)
+end
+
+post('/book/update') do
+  @title = params.fetch('title')
+  @author = params.fetch('author')
+  new_book = Book.new({:title => @title, :author => @author})
+  new_book.save()
+  erb(:success)
+end

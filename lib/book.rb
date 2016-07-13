@@ -19,11 +19,23 @@ class Book
   end
 
   define_method(:save) do
-    book = DB.exec("INSERT INTO books (title, author) VALUES ('#{@title}', '#{@author}');")
+    result = DB.exec("INSERT INTO books (title, author) VALUES ('#{@title}', '#{@author}') RETURNING id;")
+    @id = result.first().fetch("id").to_i()
   end
 
   define_method(:==) do |another_book|
     self.title().==(another_book.title()).&(self.author().==(another_book.author()))
+  end
+
+  define_method(:update_title) do |attributes|
+    @title = attributes.fetch(:title)
+    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{@id};")
+  end
+
+  define_method(:update_author) do |attributes|
+    @author = attributes.fetch(:author)
+    @id = self.id()
+    DB.exec("UPDATE books SET author='#{@author}' WHERE id=#{@id};")
   end
 
 end

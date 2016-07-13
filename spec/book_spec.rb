@@ -29,4 +29,22 @@ describe(Book) do
       expect(book1).to(eq(book2))
     end
   end
+
+  describe("#update_title") do
+    it("lets you update a book title") do
+      book = Book.new({:title => "Test Title", :author => "Test Author", :id => nil})
+      book.save()
+      book.update_title({:title => "New Title"})
+      expect(book.title()).to(eq("New Title"))
+    end
+  end
+
+  describe("#update_author") do
+    it("lets you update a book author") do
+      book = Book.new({:title => "Test Title", :author => "Test Author", :id => nil})
+      book.save()
+      book.update_author({:author => "Test Author"})
+      expect(book.author()).to(eq("Test Author"))
+    end
+  end
 end
