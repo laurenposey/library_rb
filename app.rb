@@ -30,14 +30,16 @@ post('/books/new') do
 end
 
 get('/book/:id') do
-  @book = Book.find(params.fetch('id').to_i())
+  @book = Book.find_book(params.fetch('id').to_i())
+  @title = book.fetch('title')
+  @author = book.fetch('author')
   erb(:book)
 end
-
-get('/book/update') do
-  @books = Book.all()
-  erb(:update_book_form)
-end
+#
+# get('/book/update') do
+#   @books = Book.all()
+#   erb(:update_book_form)
+# end
 
 post('/book/update') do
   @title = params.fetch('title')

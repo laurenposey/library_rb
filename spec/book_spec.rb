@@ -30,6 +30,16 @@ describe(Book) do
     end
   end
 
+  describe('.find_book') do
+    it("returns a book based on its id") do
+      book1 = Book.new({:title => "Test Title", :author => "Test Author", :id => nil})
+      book2 = Book.new({:title => "Test Title2", :author => "Test Author2", :id => nil})
+      book1.save()
+      book2.save()
+      expect(Book.find_book(book1.id)).to(eq(book1))
+    end
+  end
+
   describe("#update_title") do
     it("lets you update a book title") do
       book = Book.new({:title => "Test Title", :author => "Test Author", :id => nil})

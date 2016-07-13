@@ -27,6 +27,15 @@ class Book
     self.title().==(another_book.title()).&(self.author().==(another_book.author()))
   end
 
+  define_singleton_method(:find_book) do |id|
+    book = DB.exec("SELECT * FROM books WHERE id = #{id};")
+    title = book.first().fetch('title')
+    author = book.first().fetch('author')
+    id = book.first().fetch('id').to_i()
+    book = Book.new({:title => title, :author => author, :id => id})
+    book
+  end
+
   define_method(:update_title) do |attributes|
     @title = attributes.fetch(:title)
     DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{@id};")
