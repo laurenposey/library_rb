@@ -36,11 +36,16 @@ describe('the list the book path', {:type => :feature}) do
   end
 end
 
+describe('view the book page', {:type => :feature}) do
+  it('lets a librarian see an individual book') do
+    visit('/book/:id')
+    expect(page).to have_content("Book Info")
+  end
+end
+
 describe('the update book path', {:type => :feature}) do
   it('lets a librarian update book info') do
-    visit('/book')
-    expect(page).to have_content("Book Info")
-    click_link('Update')
+    visit('/book/update')
     expect(page).to have_content("Update book info")
     fill_in('title', :with => "New Title")
     fill_in('author', :with => "New Author")

@@ -6,7 +6,7 @@ require('./lib/patron')
 require('pg')
 require('pry')
 
-DB = PG.connect({:dbname => 'library_test'})
+DB = PG.connect({:dbname => 'library'})
 
 get('/') do
   erb(:index)
@@ -31,15 +31,13 @@ end
 
 get('/book/:id') do
   @book = Book.find_book(params.fetch('id').to_i())
-  @title = book.fetch('title')
-  @author = book.fetch('author')
   erb(:book)
 end
-#
-# get('/book/update') do
-#   @books = Book.all()
-#   erb(:update_book_form)
-# end
+
+get('/book/update') do
+  @books = Book.all()
+  erb(:update_book_form)
+end
 
 post('/book/update') do
   @title = params.fetch('title')

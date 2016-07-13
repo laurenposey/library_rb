@@ -13,7 +13,8 @@ class Book
     returned_books.each do |book|
       title = book.fetch('title')
       author = book.fetch('author')
-      books.push(Book.new({:title => title, :author => author}))
+      id = book.fetch('id').to_i()
+      books.push(Book.new({:title => title, :author => author, :id => id}))
     end
     books
   end
@@ -24,7 +25,7 @@ class Book
   end
 
   define_method(:==) do |another_book|
-    self.title().==(another_book.title()).&(self.author().==(another_book.author()))
+    self.id() == another_book.id()
   end
 
   define_singleton_method(:find_book) do |id|
