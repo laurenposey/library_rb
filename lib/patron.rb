@@ -44,7 +44,8 @@ class Patron
   end
 
   define_method(:delete_patron) do
-    DB.exec("DELETE FROM patrons WHERE id=#{id};")
+    DB.exec("DELETE FROM patron_book WHERE patron_id = #{self.id()};")
+    DB.exec("DELETE FROM patrons WHERE id = #{self.id()};")
   end
 
   define_method(:books) do

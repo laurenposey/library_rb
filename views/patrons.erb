@@ -1,0 +1,27 @@
+<h1>Welcome to the Patron page</h1>
+
+<p>Add a patron to the database:</p>
+
+<form action="/patrons" method="post">
+  <label for="name">Patron's name:</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Add patron</button>
+</form>
+
+
+<% if @patrons.any?() %>
+  <p>Click on a patron to see what books they have checked out:</p>
+
+  <ul>
+    <% @patrons.each do |patron| %>
+    <li><a href="/patrons/<%= patron.id() %>"><%= patron.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no patrons added yet!</p>
+<% end %>
+
+<p><a href="/books">See all books</a></p>
+
+<p><a href="/">Return to Main Page</a></p>
