@@ -48,16 +48,16 @@ class Patron
   end
 
   define_method(:books) do
-    patron_book = []
+    patron_books = []
     results = DB.exec("SELECT book_id FROM patron_book WHERE patron_id = #{self.id()};")
     results.each() do |result|
       book_id = result.fetch("book_id").to_i()
       book = DB.exec("SELECT * FROM books WHERE id = #{book_id};")
       title = book.first().fetch("title")
       author = book.first().fetch("author")
-      patron_book.push(Book.new({:title => title, :author => author, :id => book_id}))
+      patron_books.push(Book.new({:title => title, :author => author, :id => book_id}))
     end
-    patron_book
+    patron_books
   end
 
 end

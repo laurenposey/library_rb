@@ -36,19 +36,31 @@ class Book
     Book.new({:title => title, :author => author, :id => id})
   end
 
-  define_method(:update_title) do |attributes|
-    @title = attributes.fetch(:title)
-    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{@id};")
-  end
-
-  define_method(:update_author) do |attributes|
-    @author = attributes.fetch(:author)
+  define_method(:update) do |attributes|
+    @title = attributes.fetch(:title, @title)
+    @author = attributes.fetch(:author, @author)
     @id = self.id()
+    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{@id};")
     DB.exec("UPDATE books SET author='#{@author}' WHERE id=#{@id};")
+
+    attributes.fetch(:patron_ids, []).each() do |patron_id|
+      DB.exec("INSERT INTO patron_book (book_id, patron_id) VALUES (#{self.id()}, #{patron_id});")
+    end
   end
 
   define_method(:delete_book) do
     DB.exec("DELETE FROM books WHERE id=#{id};")
   end
 
+  define_method(:patrons) do
+    book_patrons = []
+    results = DB.exec("SELECT patron_id FROM patron_book WHERE book_id = #{self.id()};")
+    results.each() do |result|
+      patron_id = result.fetch("patron_id").to_i()
+      patron = DB.exec("SELECT * FROM patrons WHERE id = #{patron_id};")
+      name = patron.first().fetch("name")
+      book_patrons.push(Patron.new({:name => name, :id => patron_id}))
+    end
+    book_patrons
+  end
 end

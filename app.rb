@@ -43,8 +43,8 @@ patch('/book/:id/update') do
   title = params.fetch('title')
   author = params.fetch('author')
   @book = Book.find_book(params.fetch('id').to_i())
-  @book.update_title({:title => title})
-  @book.update_author({:author => author})
+  @book.update({:title => title})
+  @book.update({:author => author})
   erb(:book)
 end
 
