@@ -33,8 +33,7 @@ class Book
     title = book.first().fetch('title')
     author = book.first().fetch('author')
     id = book.first().fetch('id').to_i()
-    book = Book.new({:title => title, :author => author, :id => id})
-    book
+    Book.new({:title => title, :author => author, :id => id})
   end
 
   define_method(:update_title) do |attributes|
