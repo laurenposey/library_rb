@@ -71,6 +71,12 @@ describe(Patron) do
       patron.update({:book_ids => [book1.id(), book2.id()]})
       expect(patron.books()).to(eq([book1, book2]))
     end
+
+    it("returns a due date for checked out books") do
+      patron = Patron.new({:name => "Emma", :id => nil})
+      patron.save()
+      book1 = Book.new({:title => "Test Title", :author => "Test Author", :id => nil})
+      book1.save()
   end
 
   describe("#delete_patron") do

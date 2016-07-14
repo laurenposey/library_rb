@@ -15,13 +15,13 @@
 
   <ul>
     <% @patrons.each do |patron| %>
-    <li><a href="/patrons/<%= patron.id() %>"><%= patron.name() %></a></li>
+    <li><a class="green" href="/patrons/<%= patron.id() %>"><%= patron.name() %></a></li>
     <% end %>
   </ul>
 <% else %>
   <p>There are no patrons added yet!</p>
 <% end %>
 
-<p><a href="/books">See all books</a></p>
+<p><a class="green" href="/books">See all books</a></p>
 
-<p><a href="/">Return to Main Page</a></p>
+<p><a class="green" href="/">Return to Main Page</a></p>

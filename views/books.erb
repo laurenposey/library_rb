@@ -18,13 +18,13 @@
 
   <ul>
     <% @books.each do |book| %>
-      <li><a href="/books/<%= book.id() %>"><%= book.title() %></a></li>
+      <li><a class="green" href="/books/<%= book.id() %>"><%= book.title() %></a></li>
     <% end %>
   </ul>
 <% else %>
   <p>There are no books added yet!</p>
 <% end %>
 
-<p><a href="/patrons">See all patrons</a></p>
+<p><a class="green" href="/patrons">See all patrons</a></p>
 
-<p><a href="/">Return to Main Page</a></p>
+<p><a class="green" href="/">Return to Main Page</a></p>
