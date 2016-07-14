@@ -4,67 +4,56 @@ Capybara.app = Sinatra::Application
 set(:show_exceptions, false)
 
 describe('the index path', {:type => :feature}) do
-  it('displays a button for librarians') do
+  it('displays the add new patron and add new book links') do
     visit('/')
-    expect(page).to have_content("I'm a librarian!")
-    click_link("I'm a librarian!")
-    expect(page).to have_content("Add a book to the database!")
+    expect(page).to have_content("Welcome!")
   end
 end
 
-describe('the add the book path', {:type => :feature}) do
+describe('the add a book path', {:type => :feature}) do
   it('lets a librarian add a book to the database') do
-    visit('/books/new')
-    expect(page).to have_content("Add a book to the database!")
-    fill_in('title', :with => "Test Book")
+    visit('/')
+    click_link('Add a new book')
+    expect(page).to have_content("Welcome to the Books page")
+    fill_in('title', :with => "Test Title")
     fill_in('author', :with => "Test Author")
-    click_button('Add Book')
-    expect(page).to have_content("Book has been added to database!")
+    click_button('Add book')
+    expect(page).to have_content("Test Title")
+  end
+end
+
+describe('the add a patron path', {:type => :feature}) do
+  it('lets a librarian add a patron to the database') do
+    visit('/')
+    click_link('Add a new patron')
+    expect(page).to have_content("Welcome to the Patron page")
+    fill_in('name', :with => "Test Name")
+    click_button('Add patron')
+    expect(page).to have_content("Test Name")
   end
 end
 
 describe('the list the book path', {:type => :feature}) do
   it('lets a librarian view all books') do
-    visit('/books/new')
-    expect(page).to have_content("Add a book to the database!")
+    visit('/books')
+    expect(page).to have_content("Welcome to the Books page")
     fill_in('title', :with => "Test Title")
     fill_in('author', :with => "Test Author")
-    click_button('Add Book')
-    expect(page).to have_content("Book has been added to database!")
-    visit('/books')
-    expect(page).to have_content('Test Title')
-  end
-end
-
-describe('view the book page', {:type => :feature}) do
-  it('lets a librarian see an individual book') do
-    visit('/books')
-    click_link("Add a book to the database!")
-    expect(page).to have_content("Add a book to the database!")
-    fill_in('title', :with => "Test Title")
-    fill_in('author', :with => "Test Author")
-    click_button('Add Book')
-    expect(page).to have_content("Book has been added to database!")
-    click_link("Back")
+    click_button('Add book')
     expect(page).to have_content("Test Title")
-    click_link("Test Title")
-    expect(page).to have_content("Book Info")
   end
 end
 
-describe('the update book path', {:type => :feature}) do
+
+describe('the update a book path', {:type => :feature}) do
   it('lets a librarian update book info') do
     visit('/books')
-    click_link("Add a book to the database!")
-    expect(page).to have_content("Add a book to the database!")
     fill_in('title', :with => "Test Title")
     fill_in('author', :with => "Test Author")
-    click_button('Add Book')
-    expect(page).to have_content("Book has been added to database!")
-    click_link("Back")
+    click_button('Add book')
     expect(page).to have_content("Test Title")
     click_link("Test Title")
-    expect(page).to have_content("Book Info")
+    expect(page).to have_content("Test Title")
     click_link("Update")
     expect(page).to have_content("Update book info")
     fill_in('title', :with => "New Title")
@@ -77,16 +66,12 @@ end
 describe('the delete book path', {:type => :feature}) do
   it('lets a librarian delete a book') do
     visit('/books')
-    click_link("Add a book to the database!")
-    expect(page).to have_content("Add a book to the database!")
     fill_in('title', :with => "Test Title")
     fill_in('author', :with => "Test Author")
-    click_button('Add Book')
-    expect(page).to have_content("Book has been added to database!")
-    click_link("Back")
+    click_button('Add book')
     expect(page).to have_content("Test Title")
     click_link("Test Title")
-    expect(page).to have_content("Book Info")
+    expect(page).to have_content("Test Title")
     click_link("Update")
     expect(page).to have_content("Update book info")
     click_button('Delete Book')

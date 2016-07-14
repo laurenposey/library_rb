@@ -42,13 +42,13 @@ post("/patrons") do
 end
 
 get("/books/:id") do
-  @book = Book.find_book(params.fetch("id"))
+  @book = Book.find_book(params.fetch("id").to_i())
   @patrons = Patron.all()
   erb(:book_info)
 end
 
 get("/patrons/:id") do
-  @patron = Patron.find_patron(params.fetch("id"))
+  @patron = Patron.find_patron(params.fetch("id").to_i())
   @books = Book.all()
   erb(:patron_info)
 end
@@ -71,47 +71,32 @@ patch("/patrons/:id") do
   erb(:patron_info)
 end
 
-# get('/books/new') do
-#   erb(:books_form)
-# end
 
-# post('/books/new') do
-#   @title = params.fetch('title')
-#   @pauthor = params.fetch('author')
-#   new_book = Book.new({:title => @title, :author => @author})
-#   new_book.save()
-#   erb(:success)
-# end
-#
-# get('/book/:id') do
-#   @book = Book.find_book(params.fetch('id').to_i())
-#   erb(:book)
-# end
-#
-# get('/book/:id/update') do
-#   @book = Book.find_book(params.fetch("id").to_i())
-#   erb(:update_book_form)
-# end
-#
-# patch('/book/:id/update') do
-#   title = params.fetch('title')
-#   author = params.fetch('author')
-#   @book = Book.find_book(params.fetch('id').to_i())
-#   @book.update({:title => title})
-#   @book.update({:author => author})
-#   erb(:book)
-# end
-#
-# post('/book/:id/update') do
-#   @title = params.fetch('title')
-#   @pauthor = params.fetch('author')
-#   new_book = Book.new({:title => @title, :author => @author})
-#   new_book.save()
-#   erb(:success)
-# end
-#
-# delete("/book/:id/delete") do
-#   @book = Book.find_book(params.fetch("id").to_i())
-#   @book.delete_book()
-#   erb(:success)
-# end
+get('/books/:id/update') do
+  @book = Book.find_book(params.fetch("id").to_i())
+  erb(:update_book_form)
+end
+
+patch('/books/:id/update') do
+  title = params.fetch('title')
+  author = params.fetch('author')
+  @book = Book.find_book(params.fetch('id').to_i())
+  @book.update({:title => title, :author => author})
+  @books = Book.all()
+  erb(:books)
+end
+
+post('/books/:id/update') do
+  @title = params.fetch('title')
+  @author = params.fetch('author')
+  new_book = Book.new({:title => @title, :author => @author})
+  new_book.save()
+  erb(:success)
+end
+
+delete("/books/:id/delete") do
+  @book = Book.find_book(params.fetch("id").to_i())
+  @book.delete_book()
+  @books = Book.all()
+  erb(:success)
+end
